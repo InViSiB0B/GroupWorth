@@ -1,0 +1,7 @@
+## Interface: 16001
+## Title: GroupWorth
+## Notes: Shows the net worth (bags + gold + equipped gear) of you and your party members who also run GroupWorth.
+## Version: 0.1.0
+## SavedVariables: GroupWorthDB
+
+GroupWorth.lua
