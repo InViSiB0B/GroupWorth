@@ -16,8 +16,8 @@ Each line shows **bag value** followed by **net worth** in parentheses:
 
 ## Installation
 
-1. Download or clone this repo.
-2. Put the `GroupWorth` folder in your AddOns directory, for example `World of Warcraft\_classic_beta_\Interface\AddOns\`.
+1. Download a ZIP of this repo.
+2. Extract and put the `GroupWorth` folder in your AddOns directory, for example `World of Warcraft\_classic_beta_\Interface\AddOns\`.
 3. Restart the game, or type `/reload` if it's already running.
 
 If the addon shows as out of date, enable "Load out of date AddOns" on the character select screen. You can also set the `## Interface:` line in `GroupWorth.toc` to the number printed by `/dump (select(4, GetBuildInfo()))`.
