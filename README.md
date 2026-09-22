@@ -46,6 +46,7 @@ Only the actual group leader can set a goal, and members ignore goal messages fr
 - Items are valued at their **vendor sell price**. Auction house prices aren't used. To use another price source such as Auctionator or TSM, change `GetItemValue()` in `GroupWorth.lua`.
 - Values are recalculated shortly after your bags, gold or equipment change.
 - Each client sends its two totals to the group over the addon message channel (party, raid or instance group), and re-sends them whenever the roster changes.
+- Messages are sent through the bundled [AceComm-3.0](Libs/AceComm-3.0) library, which throttles and, if ever needed, chunks addon messages via ChatThrottleLib so the client doesn't trip the server's flood protection.
 - Only people running GroupWorth appear in the list.
 
 ## Limitations

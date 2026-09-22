@@ -17,8 +17,9 @@ local floor = math.floor
 local GetItemInfoFn = (C_Item and C_Item.GetItemInfo) or GetItemInfo
 local GetNumSlots = (C_Container and C_Container.GetContainerNumSlots) or GetContainerNumSlots
 local ContainerIDToInventoryID = (C_Container and C_Container.ContainerIDToInventoryID) or ContainerIDToInventoryID
-local RegisterPrefix = (C_ChatInfo and C_ChatInfo.RegisterAddonMessagePrefix) or RegisterAddonMessagePrefix
-local SendMessage = (C_ChatInfo and C_ChatInfo.SendAddonMessage) or SendAddonMessage
+
+-- Addon comms are handled by AceComm-3.0 (Libs\AceComm-3.0)
+LibStub("AceComm-3.0"):Embed(ns)
 
 local LAST_BAG = (NUM_BAG_SLOTS or 4) + (NUM_REAGENTBAG_SLOTS or 0)
 local FIRST_EQUIPPED = INVSLOT_FIRST_EQUIPPED or 1
@@ -261,14 +262,14 @@ end
 local function Broadcast()
     local channel = GroupChannel()
     if not channel then return end
-    SendMessage(PREFIX, format("%d:%.0f:%.0f", PROTOCOL, mine.bag, mine.equipped), channel)
+    ns:SendCommMessage(PREFIX, format("%d:%.0f:%.0f", PROTOCOL, mine.bag, mine.equipped), channel)
 end
 
 -- Goal message: "G:<copper>" (0 clears). Sent by the group leader.
 local function BroadcastGoal()
     local channel = GroupChannel()
     if not channel then return end
-    SendMessage(PREFIX, format("G:%.0f", db.goal or 0), channel)
+    ns:SendCommMessage(PREFIX, format("G:%.0f", db.goal or 0), channel)
 end
 
 local function IsLeaderName(name)
@@ -277,10 +278,8 @@ local function IsLeaderName(name)
     end
 end
 
-local function OnAddonMessage(prefix, text, _, sender)
-    if prefix ~= PREFIX then return end
-
-    local key = Ambiguate(sender, "none")
+local function OnAddonMessage(_, text, _, sender)
+    local key = sender
     if key == UnitKey("player") then return end
 
     local goal = text:match("^G:(%d+)$")
@@ -369,7 +368,7 @@ function events.ADDON_LOADED(name)
     end
     frame:SetShown(db.shown)
 
-    RegisterPrefix(PREFIX)
+    ns:RegisterComm(PREFIX, OnAddonMessage)
     eventFrame:UnregisterEvent("ADDON_LOADED")
 end
 
@@ -390,7 +389,6 @@ function events.GET_ITEM_INFO_RECEIVED()
     if incomplete then ScheduleRefresh() end
 end
 
-events.CHAT_MSG_ADDON = OnAddonMessage
 events.BAG_UPDATE_DELAYED = ScheduleRefresh
 events.PLAYER_MONEY = ScheduleRefresh
 events.PLAYER_EQUIPMENT_CHANGED = ScheduleRefresh
