@@ -16,7 +16,7 @@ Each line shows **bag value** followed by **net worth** in parentheses:
 
 ## Installation
 
-1. Download a ZIP of this repo.
+1. Download the ZIP of the latest Release.
 2. Extract and put the `GroupWorth` folder in your AddOns directory, for example `World of Warcraft\_classic_beta_\Interface\AddOns\`.
 3. Restart the game, or type `/reload` if it's already running.
 
